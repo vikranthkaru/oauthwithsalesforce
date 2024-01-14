@@ -2,9 +2,9 @@ var express = require('express');
 var http = require('http');
 var jsforce = require('jsforce');
 var fs = require('fs');
-const PORT = process.env.PORT ||5000;
+//const PORT = process.env.PORT ||5000;
 var app = express();
-// app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3001);
 
 fs.readFile('./app.html', function(error,html)
 {
@@ -14,7 +14,9 @@ fs.readFile('./app.html', function(error,html)
         response.writeHeader(200,{"Content-Type":"text/html"});
         response.write(html);
         response.end();
-    }).listen(PORT)
+    }).listen(app.get('port'), function () {
+        console.log('Express server listening on port ' + app.get('port'));
+    })
 });
 app.get('/', (req, res) => { 
     res.send('A simple Node App is '
@@ -47,6 +49,3 @@ app.post('/add',function(req,res)
 // app.get('/', function (req, res) {
 
 // });
-http.createServer(app).listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
-});
