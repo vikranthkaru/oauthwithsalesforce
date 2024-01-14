@@ -1,9 +1,14 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3030;
-
-// your code
-
-app.listen(PORT, () => {
-  console.log(`server started on port ${PORT}`);
-});
+app.get('/', (req, res) => { 
+    res.send('A simple Node App is '
+        + 'running on this server') 
+    res.end() 
+}) 
+ 
+// Port Number
+const PORT = process.env.PORT ||5000;
+ 
+// Server Setup
+app.listen(PORT,console.log(
+  `Server started on port ${PORT}`));
