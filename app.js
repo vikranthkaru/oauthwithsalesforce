@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     res.end() 
 }) 
 
-app.post('/',function(req,res)
+app.post('/add',function(req,res)
 {
     console.log('url-->'+process.env.DATABASE_URL);
     var conn = new jsforce.Connection({
