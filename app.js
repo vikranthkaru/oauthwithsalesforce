@@ -4,6 +4,7 @@ var jsforce = require('jsforce'); //Adding JsForce
 var app = express();
 app.set('port', process.env.PORT || 3001);
 app.get('/', function (req, res) {
+    console.log('url-->'+process.env['DATABASE_URL']);
     var conn = new jsforce.Connection({
          loginUrl : process.env['DATABASE_URL']
     });
