@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
     var conn = new jsforce.Connection({
          loginUrl : process.env['DATABASE_URL']
     });
-    var username = process.env.USER_ID;
+    var username = process.env.USER_NAME;
     console.log('username-->'+username);
     var password = process.env.USER_PASSWORD+process.env.SF_TOKEN;
     console.log('password-->'+password);
