@@ -8,8 +8,8 @@ app.get('/', function (req, res) {
     var conn = new jsforce.Connection({
          loginUrl : process.env['DATABASE_URL']
     });
-    var username = process.env['USER_ID'];
-    var password = process.env['USER_PASSWORD']+process.env['SF_TOKEN'];
+    var username = process.env.USER_ID;
+    var password = process.env.USER_PASSWORD+process.env.SF_TOKEN;
     conn.login(username, password, function (err, userInfo) {
         if (err) { return console.error(err); }
         // Now you can get the access token and instance URL information.
