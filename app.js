@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
         }
     });
 })
+const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
+const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
 
 app.get('/oauthcallback', function(req,res) {
     const oauth2 = new jsforce.OAuth2({
@@ -24,7 +26,7 @@ app.get('/oauthcallback', function(req,res) {
       redirectUri: process.env.REDIRECT_URI
     });
     const conn = new jsforce.Connection({ oauth2 : oauth2 });
-    conn.authorize(req.query.code, function(err, userInfo) {
+    conn.authorize(req.query.code,  { code_verifier: codeVerifier }, function(err, userInfo) {
       if (err) {
         return console.error(err);
       }
@@ -68,8 +70,6 @@ function base64UrlEscape(str) {
 
 
 app.post('/oauthconn',  (req, res) => {
-    const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
-    const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
