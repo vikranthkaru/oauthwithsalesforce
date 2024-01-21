@@ -6,18 +6,6 @@ var fs = require('fs');
 var app = express();
 app.set('port', process.env.PORT || 3001);
 app.use(express.urlencoded({ extended: true }));
-// fs.readFile('./app.html', function(error,html)
-// {
-//     if(error) throw error;
-//     http.createServer(function(request,response)
-//     {
-//         response.writeHeader(200,{"Content-Type":"text/html"});
-//         response.write(html);
-//         response.end();
-//     }).listen(app.get('port'), function () {
-//         console.log('Express server listening on port ' + app.get('port'));
-//     })
-// });
 app.get('/', (req, res) => {
     fs.readFile('./app.html', (error, html) => {
         if (error) {
@@ -58,8 +46,8 @@ app.post('/add',  (req, res) => {
             }
         });
        // res.send('heySalesforce : JSForce Connect Successed!');
-        res.setHeader('Content-Type', 'text/html');
-        res.status(200).send(html);
+        // res.setHeader('Content-Type', 'text/html');
+        // res.status(200).send(html);
     });
 });
 
