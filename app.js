@@ -60,6 +60,8 @@ app.post('/oauthconn',  (req, res) => {
     console.log('url-->' + process.env.DATABASE_URL);
     const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
     const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
+    console.log('codeVerifier--->'+codeVerifier);
+    console.log('codeChallenge--->'+codeChallenge);
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
