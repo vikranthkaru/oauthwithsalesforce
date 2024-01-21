@@ -46,9 +46,22 @@ app.post('/add',  (req, res) => {
             }
         });
        // res.send('heySalesforce : JSForce Connect Successed!');
-        // res.setHeader('Content-Type', 'text/html');
-        // res.status(200).send(html);
     });
+});
+
+
+app.post('/oauthconn',  (req, res) => {
+    console.log('Received a form submission');
+    console.log(req);
+    console.log('url-->' + process.env.DATABASE_URL);
+    const oauth2 = new sf.OAuth2({
+        loginUrl : process.env.DATABASE_URL,
+        clientId: process.env.CONSUMER_KEY,
+        clientSecret: process.env.CONSUMER_SECRET,
+        redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
+    });
+    oauth2.getAuthorizationUrl({ scope: 'api id web' });
+    res.send('heySalesforce : JSForce Connect Successed!');
 });
 
 http.createServer(app).listen(app.get('port'), () => {
