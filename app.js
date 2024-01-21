@@ -63,7 +63,7 @@ app.post('/oauthconn',  (req, res) => {
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
-        redirectUri: 'https://oauthwithsalesforce.onrender.com',
+        redirectUri: `${req.protocol}://${req.get('host')}/${process.env.REDIRECT_URI}`,
         response_type: 'code',
         code_challenge: codeChallenge,
         code_challenge_method: 'S256'
