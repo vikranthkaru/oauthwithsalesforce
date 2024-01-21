@@ -43,9 +43,9 @@ app.post('/oauthconn',  (req, res) => {
     //       }
     //       console.log(conn.accessToken, conn.instanceUrl); 
     // });
-    app.get('/oauth2/auth', function(req, res) {
+    //app.get('/oauth2/auth', function(req, res) {
         res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
-      });
+     // });
     // res.redirect(authorizationUrl);
     //res.send('heySalesforce : JSForce Connect Successed!');
 });
