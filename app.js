@@ -52,13 +52,14 @@ app.get('/oauthcallback', function (req, res) {
                 displayname: sfUserInfo.display_name
             };
             const response = res;
-            fs.readFile('./webflow.html', (error, html) => {
-                if (error) {
-                    res.status(500).send('Internal Server Error');
-                } else {
-                    response.render('pages/index', { data });
-                }
-            });
+            response.render('pages/webserverflow', { data ,  activeTab: 'WebFlow'});
+            // fs.readFile('./webflow.html', (error, html) => {
+            //     if (error) {
+            //         res.status(500).send('Internal Server Error');
+            //     } else {
+            //         response.render('pages/webserverflow', { data, });
+            //     }
+            // });
         });
     });
 });
@@ -96,7 +97,8 @@ app.post('/oauthconn', (req, res) => {
 
 app.get('/flow', (req, res) => {
     const flowName = req.query.flow;
-    res.send(`Clicked on ${flowName}`);
+    res.render('pages/userAgentFlow', { activeTab: flowName });
+
 });
 
 http.createServer(app).listen(app.get('port'), () => {
