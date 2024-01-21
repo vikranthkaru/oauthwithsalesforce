@@ -70,6 +70,7 @@ app.post('/oauthconn',  (req, res) => {
         codeChallenge: codeChallenge,
         codeChallengeMethod: 'S256'
     });
+    console.log('Authorization URL: ' + oauth2.getAuthorizationUrl({}));
     res.redirect(oauth2.getAuthorizationUrl({}));
     //res.send('heySalesforce : JSForce Connect Successed!');
 });
