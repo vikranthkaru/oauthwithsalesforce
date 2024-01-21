@@ -64,9 +64,9 @@ app.post('/oauthconn',  (req, res) => {
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
         redirectUri: process.env.REDIRECT_URI,
-        response_type: 'code',
-        code_challenge: codeChallenge,
-        code_challenge_method: 'S256'
+        responseType: 'code',
+        codeChallenge: codeChallenge,
+        codeChallengeMethod: 'S256'
     });
     res.redirect(oauth2.getAuthorizationUrl({}));
     //res.send('heySalesforce : JSForce Connect Successed!');
