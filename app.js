@@ -49,7 +49,9 @@ app.post('/add',  (req, res) => {
         // logged in user property
         console.log("User ID: " + userInfo.id);
         console.log("Org ID: " + userInfo.organizationId);
-        res.send('heySalesforce : JSForce Connect Successed!');
+       // res.send('heySalesforce : JSForce Connect Successed!');
+        res.setHeader('Content-Type', 'text/html');
+        res.status(200).send(html);
     });
 });
 
