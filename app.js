@@ -66,9 +66,9 @@ app.post('/oauthconn',  (req, res) => {
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
         redirectUri: process.env.REDIRECT_URI,
-        responseType: 'code',
-        codeChallenge: codeChallenge,
-        codeChallengeMethod: 'S256'
+        response_type: 'code',
+        code_challenge: codeChallenge,
+        code_challenge_method: 'S256'
     });
     console.log('Authorization URL: ' + oauth2.getAuthorizationUrl({}));
     res.redirect(oauth2.getAuthorizationUrl({}));
