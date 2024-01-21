@@ -54,7 +54,7 @@ app.post('/oauthconn',  (req, res) => {
     console.log('Received a form submission');
     console.log(req);
     console.log('url-->' + process.env.DATABASE_URL);
-    const oauth2 = new sf.OAuth2({
+    const oauth2 = new jsforce.OAuth2({
         loginUrl : process.env.DATABASE_URL,
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
