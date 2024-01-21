@@ -56,32 +56,30 @@ app.get('/oauthcallback', function (req, res) {
                 if (error) {
                     res.status(500).send('Internal Server Error');
                 } else {
-                    // res.setHeader('Content-Type', 'text/html');
                     response.render('pages/index', { data });
-                    // res.status(200).send(html);
                 }
             });
         });
     });
 });
 
-function makeCallout(accessToken) {
-    // Example: Making a callout to the Salesforce REST API
-    const apiUrl = 'https://your-salesforce-instance.salesforce.com/services/data/v52.0/sobjects/Account';
-    axios.get(apiUrl, {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
-    })
-        .then(response => {
-            console.log('API Response:', response.data);
-            // Handle the response from the Salesforce API
-        })
-        .catch(error => {
-            console.error('API Error:', error);
-            // Handle errors
-        });
-}
+// function makeCallout(accessToken) {
+//     // Example: Making a callout to the Salesforce REST API
+//     const apiUrl = 'https://your-salesforce-instance.salesforce.com/services/data/v52.0/sobjects/Account';
+//     axios.get(apiUrl, {
+//         headers: {
+//             'Authorization': `Bearer ${accessToken}`
+//         }
+//     })
+//         .then(response => {
+//             console.log('API Response:', response.data);
+//             // Handle the response from the Salesforce API
+//         })
+//         .catch(error => {
+//             console.error('API Error:', error);
+//             // Handle errors
+//         });
+// }
 
 
 app.post('/oauthconn', (req, res) => {
@@ -94,6 +92,11 @@ app.post('/oauthconn', (req, res) => {
     });
     const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
     res.redirect(authorizationUrl);
+});
+
+app.get('/flow', (req, res) => {
+    const flowName = req.query.flow;
+    res.send(`Clicked on ${flowName}`);
 });
 
 http.createServer(app).listen(app.get('port'), () => {
