@@ -57,7 +57,7 @@ app.post('/oauthconn',  (req, res) => {
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
-        redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
+        redirectUri: 'https://oauthwithsalesforce.onrender.com'
     });
     res.redirect(oauth2.getAuthorizationUrl({}));
     res.send('heySalesforce : JSForce Connect Successed!');
