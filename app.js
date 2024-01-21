@@ -51,9 +51,6 @@ app.post('/add',  (req, res) => {
 
 const crypto = require('crypto');
 
-const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
-const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
-
 function base64UrlEscape(str) {
     return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
@@ -61,6 +58,8 @@ app.post('/oauthconn',  (req, res) => {
     console.log('Received a form submission');
     console.log(req);
     console.log('url-->' + process.env.DATABASE_URL);
+    const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
+    const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
