@@ -8,14 +8,15 @@ app.set('port', process.env.PORT || 3001);
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-    fs.readFile('./app.html', (error, html) => {
-        if (error) {
-            res.status(500).send('Internal Server Error');
-        } else {
-            res.setHeader('Content-Type', 'text/html');
-            res.status(200).send(html);
-        }
-    });
+    res.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
+    // fs.readFile('./app.html', (error, html) => {
+    //     if (error) {
+    //         res.status(500).send('Internal Server Error');
+    //     } else {
+    //         res.setHeader('Content-Type', 'text/html');
+    //         res.status(200).send(html);
+    //     }
+    // });
 })
 
 const crypto = require('crypto');
@@ -53,13 +54,6 @@ app.get('/oauthcallback', function (req, res) {
             };
             const response = res;
             response.render('pages/webserverflow', { data ,  activeTab: 'WebFlow'});
-            // fs.readFile('./webflow.html', (error, html) => {
-            //     if (error) {
-            //         res.status(500).send('Internal Server Error');
-            //     } else {
-            //         response.render('pages/webserverflow', { data, });
-            //     }
-            // });
         });
     });
 });

@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">OAuth Web Flow</a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <a class="nav-link <%= activeTab === 'OAuth Flow 2' ? 'active' : '' %>" href="/flow/OAuth%20Flow%202" data-flow="WebFlow">OAuth Web Flow</a>
+            <a class="nav-link <%= activeTab === 'OAuth Web Flow' ? 'active' : '' %>" href="/flow?flow=OAuth Web Flow" data-flow="OAuth Web Flow">OAuth Web Flow</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <%= activeTab === 'OAuth Flow 2' ? 'active' : '' %>" href="/flow/OAuth%20Flow%202" data-flow="UserAgentFlow">User Agent Flow</a>
+            <a class="nav-link <%= activeTab === 'User Agent Flow' ? 'active' : '' %>" href="/flow?flow=User Agent Flow" data-flow="User Agent Flow">User Agent Flow</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <%= activeTab === 'OAuth Flow 3' ? 'active' : '' %>" href="/flow/OAuth%20Flow%203" data-flow="JWTBearerFlow">JWT Bearer Flow</a>
+            <a class="nav-link <%= activeTab === 'JWT Bearer Flow' ? 'active' : '' %>" href="/flow?flow=JWT Bearer Flow" data-flow="JWT Bearer Flow">JWT Bearer Flow</a>
         </li>
     </ul>
 </nav>
