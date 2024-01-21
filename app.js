@@ -16,6 +16,13 @@ app.get('/', (req, res) => {
         }
     });
 })
+
+const crypto = require('crypto');
+
+function base64UrlEscape(str) {
+    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
 const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
 const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
 
@@ -60,12 +67,6 @@ function makeCallout(accessToken) {
         console.error('API Error:', error);
         // Handle errors
     });
-}
-
-const crypto = require('crypto');
-
-function base64UrlEscape(str) {
-    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
 
