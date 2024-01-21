@@ -61,7 +61,7 @@ app.post('/oauthconn',  (req, res) => {
         redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
     });
     oauth2.getAuthorizationUrl({ scope: 'api id web' });
-    res.send('heySalesforce : JSForce Connect Successed!');
+    res.send('heySalesforce : JSForce Connect Successed!'+ oauth2.getAuthorizationUrl({ scope: 'api id web' }));
 });
 
 http.createServer(app).listen(app.get('port'), () => {
