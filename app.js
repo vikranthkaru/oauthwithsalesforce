@@ -49,7 +49,14 @@ app.post('/add',  (req, res) => {
     });
 });
 
+const crypto = require('crypto');
 
+const codeVerifier = base64UrlEscape(crypto.randomBytes(32).toString('base64'));
+const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVerifier).digest('base64'));
+
+function base64UrlEscape(str) {
+    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
 app.post('/oauthconn',  (req, res) => {
     console.log('Received a form submission');
     console.log(req);
@@ -58,7 +65,9 @@ app.post('/oauthconn',  (req, res) => {
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
         redirectUri: 'https://oauthwithsalesforce.onrender.com',
-        responsetype: 'code'
+        response_type: 'code',
+        code_challenge: codeChallenge,
+        code_challenge_method: 'S256'
     });
     res.redirect(oauth2.getAuthorizationUrl({}));
     //res.send('heySalesforce : JSForce Connect Successed!');
