@@ -51,13 +51,17 @@ app.get('/oauthcallback', function (req, res) {
             }
     
             // Process and send the account details to the client
-            const data = result.records.map(account => {
+            const account = result.records.map(account => {
                 return {
                     id: account.Id,
                     name: account.Name
                 };
             });
-            
+            const data = {
+                accounts:account,
+                displayButton: false,
+                displayContext: true
+            }
             const response = res;
             response.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
         });

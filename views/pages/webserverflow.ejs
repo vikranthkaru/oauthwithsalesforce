@@ -13,14 +13,28 @@
   <div class="jumbotron">
     <% if(data.displayButton) { %>
       <form action="/oauthconn" method="post">
-          <button type="submit" id="submit">Inititate Login</button>
+          <button type="submit" id="submit">Fetch Account</button>
       </form> 
     <% } %>
       <form action="/cancel" method="post">
           <button type="submit" id="cancel">Cancel</button>
       </form> 
-    <% if(data.displayContext) { %>
-      <h1><%= data.displayname %></h1>
+      <% if(data.displayContext) { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Account ID</th>
+                    <th>Account Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.accounts.forEach(account => { %>
+                    <tr>
+                        <td><%= account.id %></td>
+                        <td><%= account.name %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
     <% } %>
   </div>
 </main>
