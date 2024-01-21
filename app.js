@@ -17,6 +17,46 @@ app.get('/', (req, res) => {
     });
 })
 
+app.get('/oauth/callback', (req, res) => {
+    const oauth2 = new jsforce.OAuth2({
+        clientId: process.env.CONSUMER_KEY,
+        clientSecret: process.env.CONSUMER_SECRET,
+        redirectUri: process.env.REDIRECT_URI,
+    });
+
+    oauth2.getAccessToken(req.query.code, (err, userInfo) => {
+        if (err) {
+            return console.error(err);
+        }
+
+        const accessToken = userInfo.access_token;
+        // You may want to store the access token and instance URL for future use
+
+        // Make a callout using the obtained access token
+        makeCallout(accessToken);
+
+        // Respond to the user or redirect them to the appropriate page
+        res.send('Authorization successful! You can now use the Salesforce API.');
+    });
+});
+
+function makeCallout(accessToken) {
+    // Example: Making a callout to the Salesforce REST API
+    const apiUrl = 'https://your-salesforce-instance.salesforce.com/services/data/v52.0/sobjects/Account';
+    axios.get(apiUrl, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+        console.log('API Response:', response.data);
+        // Handle the response from the Salesforce API
+    })
+    .catch(error => {
+        console.error('API Error:', error);
+        // Handle errors
+    });
+}
 
 const crypto = require('crypto');
 
@@ -35,7 +75,7 @@ app.post('/oauthconn',  (req, res) => {
         code_challenge: codeChallenge,
         redirectUri: process.env.REDIRECT_URI,
     });
-    //const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
+    const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
     // const fetchAccessToken = new jsforce.Connection({ oauth2: oauth2 });
     // fetchAccessToken.authorize(req.query.code, function(err, userInfo){
     //     if (err) {
@@ -44,9 +84,9 @@ app.post('/oauthconn',  (req, res) => {
     //       console.log(conn.accessToken, conn.instanceUrl); 
     // });
     //app.get('/oauth2/auth', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
+       // res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
      // });
-    // res.redirect(authorizationUrl);
+      res.redirect(authorizationUrl);
     //res.send('heySalesforce : JSForce Connect Successed!');
 });
 
