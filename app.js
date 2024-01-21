@@ -49,6 +49,14 @@ app.post('/add',  (req, res) => {
         // logged in user property
         console.log("User ID: " + userInfo.id);
         console.log("Org ID: " + userInfo.organizationId);
+        fs.readFile('./app.html', (error, html) => {
+            if (error) {
+                res.status(500).send('Internal Server Error');
+            } else {
+                res.setHeader('Content-Type', 'text/html');
+                res.status(200).send(html);
+            }
+        });
        // res.send('heySalesforce : JSForce Connect Successed!');
         res.setHeader('Content-Type', 'text/html');
         res.status(200).send(html);
