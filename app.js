@@ -53,17 +53,39 @@ app.post('/oauthconn',  (req, res) => {
         redirectUri: process.env.REDIRECT_URI,
     });
     const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
-    const fetchAccessToken = new jsforce.Connection({ oauth2: oauth2 });
-    fetchAccessToken.authorize(req.query.code, function(err, userInfo){
-        if (err) {
-            return console.error(err);
-          }
-          console.log(conn.accessToken, conn.instanceUrl); 
-    });
-    // res.redirect(authorizationUrl);
+    // const fetchAccessToken = new jsforce.Connection({ oauth2: oauth2 });
+    // fetchAccessToken.authorize(req.query.code, function(err, userInfo){
+    //     if (err) {
+    //         return console.error(err);
+    //       }
+    //       console.log(conn.accessToken, conn.instanceUrl); 
+    // });
+     res.redirect(authorizationUrl);
     //res.send('heySalesforce : JSForce Connect Successed!');
 });
 
+app.get('/oauth/callback', (req, res) => {
+    const oauth2 = new jsforce.OAuth2({
+        clientId: process.env.CONSUMER_KEY,
+        clientSecret: process.env.CONSUMER_SECRET,
+        redirectUri: process.env.REDIRECT_URI,
+    });
+
+    // Exchange the authorization code for an access token
+    oauth2.getAccessToken(req.query.code, (err, userInfo) => {
+        if (err) {
+            return console.error(err);
+        }
+
+        // Access token and instance URL are available in userInfo
+        console.log(userInfo);
+        
+        // You may want to store the access token and instance URL for future use
+
+        // Respond to the user or redirect them to the appropriate page
+        res.send('Authorization successful! You can now use the Salesforce API.');
+    });
+});
 http.createServer(app).listen(app.get('port'), () => {
     console.log('Express server listening on port ' + app.get('port'));
 });
