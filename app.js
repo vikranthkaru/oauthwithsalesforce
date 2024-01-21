@@ -37,7 +37,7 @@ app.post('/add',  (req, res) => {
         // logged in user property
         console.log("User ID: " + userInfo.id);
         console.log("Org ID: " + userInfo.organizationId);
-        fs.readFile('./app.html', (error, html) => {
+        fs.readFile('./webflow.html', (error, html) => {
             if (error) {
                 res.status(500).send('Internal Server Error');
             } else {
@@ -54,25 +54,13 @@ app.post('/oauthconn',  (req, res) => {
     console.log('Received a form submission');
     console.log(req);
     console.log('url-->' + process.env.DATABASE_URL);
-    const conn = new jsforce.Connection({
-        oauth2 : {
-            loginUrl : process.env.DATABASE_URL,
-            clientId: process.env.CONSUMER_KEY,
-            clientSecret: process.env.CONSUMER_SECRET,
-            redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
-        }
+    const oauth2 = new jsforce.OAuth2({
+        clientId: process.env.CONSUMER_KEY,
+        clientSecret: process.env.CONSUMER_SECRET,
+        redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
     });
-    conn.login(username, password, function(err, userInfo) {
-        if (err) { return console.error(err); }
-        // Now you can get the access token and instance URL information.
-        // Save them to establish connection next time.
-        console.log(conn.accessToken);
-        console.log(conn.instanceUrl);
-        // logged in user property
-        console.log("User ID: " + userInfo.id);
-        console.log("Org ID: " + userInfo.organizationId);
-        // ...
-      });
+    res.redirect(oauth2.getAuthorizationUrl({}));
+    res.send('heySalesforce : JSForce Connect Successed!');
 });
 
 http.createServer(app).listen(app.get('port'), () => {
