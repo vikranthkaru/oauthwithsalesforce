@@ -62,7 +62,7 @@ app.get('/oauthcallback', function (req, res) {
                     res.status(500).send('Internal Server Error');
                 } else {
                    // res.setHeader('Content-Type', 'text/html');
-                    response.render('app.js', { data });
+                    response.render('app', { data });
                    // res.status(200).send(html);
                 }
             });
