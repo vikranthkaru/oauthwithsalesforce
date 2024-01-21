@@ -8,7 +8,11 @@ app.set('port', process.env.PORT || 3001);
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-    res.render('pages/webserverflow', { activeTab: 'OAuth Web Flow'});
+    const data = {
+        displayButton: true,
+        displayContext: false
+    };
+    res.render('pages/webserverflow', {data, activeTab: 'OAuth Web Flow'});
     // fs.readFile('./app.html', (error, html) => {
     //     if (error) {
     //         res.status(500).send('Internal Server Error');
@@ -49,11 +53,13 @@ app.get('/oauthcallback', function (req, res) {
         conn2.identity(function (err, sfUserInfo) {
             if (err) { return console.error(err); }
             const data = {
+                displayButton: false,
+                displayContext: true,
                 userName: sfUserInfo.username,
                 displayname: sfUserInfo.display_name
             };
             const response = res;
-            response.render('pages/webserverflow', { data ,  activeTab: 'WebFlow'});
+            response.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
         });
     });
 });
