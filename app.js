@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 
 app.post('/add',function(req,res)
 {
+    console.log(req);
     console.log('url-->'+process.env.DATABASE_URL);
     var conn = new jsforce.Connection({
          loginUrl : process.env.DATABASE_URL
