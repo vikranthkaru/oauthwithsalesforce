@@ -58,7 +58,6 @@ app.get('/oauthcallback', function (req, res) {
                 };
             });
             
-            res.json({ accounts: accounts });
             const response = res;
             response.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
         });
