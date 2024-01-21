@@ -36,13 +36,16 @@ app.post('/oauthconn',  (req, res) => {
         redirectUri: process.env.REDIRECT_URI,
     });
     //const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
-    const fetchAccessToken = new jsforce.Connection({ oauth2: oauth2 });
-    fetchAccessToken.authorize(req.query.code, function(err, userInfo){
-        if (err) {
-            return console.error(err);
-          }
-          console.log(conn.accessToken, conn.instanceUrl); 
-    });
+    // const fetchAccessToken = new jsforce.Connection({ oauth2: oauth2 });
+    // fetchAccessToken.authorize(req.query.code, function(err, userInfo){
+    //     if (err) {
+    //         return console.error(err);
+    //       }
+    //       console.log(conn.accessToken, conn.instanceUrl); 
+    // });
+    app.get('/oauth2/auth', function(req, res) {
+        res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
+      });
     // res.redirect(authorizationUrl);
     //res.send('heySalesforce : JSForce Connect Successed!');
 });
