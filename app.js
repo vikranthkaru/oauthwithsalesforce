@@ -42,7 +42,7 @@ app.get('/oauthcallback', function (req, res) {
             instanceUrl: conn.instanceUrl,
             accessToken: conn.accessToken
         });
-        const restApiEndpoint = `${conn.instantceURL}/services/data/v53.0/query/?q=SELECT+Id,Name+FROM+Account`;
+        const restApiEndpoint = `${conn.instanceUrl}/services/data/v53.0/query/?q=SELECT+Id,Name+FROM+Account`;
         conn2.request(restApiEndpoint, function (err, result) {
             if (err) {
                 console.error(err);
