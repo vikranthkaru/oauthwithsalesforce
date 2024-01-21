@@ -8,7 +8,7 @@ app.set('port', process.env.PORT || 3001);
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-    res.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
+    res.render('pages/webserverflow', { activeTab: 'OAuth Web Flow'});
     // fs.readFile('./app.html', (error, html) => {
     //     if (error) {
     //         res.status(500).send('Internal Server Error');
