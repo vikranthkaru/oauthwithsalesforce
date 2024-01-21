@@ -61,7 +61,7 @@ app.post('/oauthconn',  (req, res) => {
     console.log('codeChallenge--->'+codeChallenge);
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
-        clientSecret: process.env.CONSUMER_SECRET,
+        // clientSecret: process.env.CONSUMER_SECRET,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
         redirectUri: process.env.REDIRECT_URI,
