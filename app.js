@@ -17,28 +17,28 @@ app.get('/', (req, res) => {
     });
 })
 
-app.get('/oauth/callback', (req, res) => {
-    const oauth2 = new jsforce.OAuth2({
-        clientId: process.env.CONSUMER_KEY,
-        clientSecret: process.env.CONSUMER_SECRET,
-        redirectUri: process.env.REDIRECT_URI,
-    });
+// app.get('/oauth/callback', (req, res) => {
+//     const oauth2 = new jsforce.OAuth2({
+//         clientId: process.env.CONSUMER_KEY,
+//         clientSecret: process.env.CONSUMER_SECRET,
+//         redirectUri: process.env.REDIRECT_URI,
+//     });
 
-    oauth2.getAccessToken(req.query.code, (err, userInfo) => {
-        if (err) {
-            return console.error(err);
-        }
+//     oauth2.getAccessToken(req.query.code, (err, userInfo) => {
+//         if (err) {
+//             return console.error(err);
+//         }
 
-        const accessToken = userInfo.access_token;
-        // You may want to store the access token and instance URL for future use
+//         const accessToken = userInfo.access_token;
+//         // You may want to store the access token and instance URL for future use
 
-        // Make a callout using the obtained access token
-        makeCallout(accessToken);
+//         // Make a callout using the obtained access token
+//       //  makeCallout(accessToken);
 
-        // Respond to the user or redirect them to the appropriate page
-        res.send('Authorization successful! You can now use the Salesforce API.');
-    });
-});
+//         // Respond to the user or redirect them to the appropriate page
+//         res.send('Authorization successful! You can now use the Salesforce API.');
+//     });
+// });
 
 function makeCallout(accessToken) {
     // Example: Making a callout to the Salesforce REST API
