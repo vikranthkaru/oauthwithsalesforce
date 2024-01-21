@@ -61,7 +61,7 @@ app.post('/oauthconn',  (req, res) => {
         responsetype: 'code'
     });
     res.redirect(oauth2.getAuthorizationUrl({}));
-    res.send('heySalesforce : JSForce Connect Successed!');
+    //res.send('heySalesforce : JSForce Connect Successed!');
 });
 
 http.createServer(app).listen(app.get('port'), () => {
