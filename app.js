@@ -54,14 +54,25 @@ app.post('/oauthconn',  (req, res) => {
     console.log('Received a form submission');
     console.log(req);
     console.log('url-->' + process.env.DATABASE_URL);
-    const oauth2 = new jsforce.OAuth2({
-        loginUrl : process.env.DATABASE_URL+'services/oauth2/authorize',
-        clientId: process.env.CONSUMER_KEY,
-        clientSecret: process.env.CONSUMER_SECRET,
-        redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
+    const conn = new jsforce.Connection({
+        oauth2 : {
+            loginUrl : process.env.DATABASE_URL,
+            clientId: process.env.CONSUMER_KEY,
+            clientSecret: process.env.CONSUMER_SECRET,
+            redirectUri: 'https://oauthwithsalesforce.onrender.com/add'
+        }
     });
-    oauth2.getAuthorizationUrl({ scope: 'api id web' });
-    res.send('heySalesforce : JSForce Connect Successed!'+ oauth2.getAuthorizationUrl({ scope: 'api id web' }));
+    conn.login(username, password, function(err, userInfo) {
+        if (err) { return console.error(err); }
+        // Now you can get the access token and instance URL information.
+        // Save them to establish connection next time.
+        console.log(conn.accessToken);
+        console.log(conn.instanceUrl);
+        // logged in user property
+        console.log("User ID: " + userInfo.id);
+        console.log("Org ID: " + userInfo.organizationId);
+        // ...
+      });
 });
 
 http.createServer(app).listen(app.get('port'), () => {
