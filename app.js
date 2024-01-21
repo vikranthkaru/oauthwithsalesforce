@@ -34,6 +34,7 @@ app.get('/oauthcallback', function (req, res) {
         clientSecret: process.env.CONSUMER_SECRET,
         redirectUri: process.env.REDIRECT_URI
     });
+    console.log('codeVerifier-->'+codeVerifier);
     const conn = new jsforce.Connection({ oauth2: oauth2 });
     conn.authorize(req.query.code, { code_verifier: codeVerifier }, function (err, userInfo) {
         if (err) {
