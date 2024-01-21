@@ -66,8 +66,9 @@ app.post('/oauthconn',  (req, res) => {
         code_challenge: codeChallenge,
         redirectUri: process.env.REDIRECT_URI,
     });
-    console.log('Authorization URL: ' + oauth2.getAuthorizationUrl({}));
-    res.redirect(oauth2.getAuthorizationUrl({}));
+    const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
+    console.log('Authorization URL: ' + authorizationUrl);
+    res.redirect(authorizationUrl);
     //res.send('heySalesforce : JSForce Connect Successed!');
 });
 
