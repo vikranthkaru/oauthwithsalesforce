@@ -13,14 +13,6 @@ app.get('/', (req, res) => {
         displayContext: false
     };
     res.render('pages/webserverflow', {data, activeTab: 'OAuth Web Flow'});
-    // fs.readFile('./app.html', (error, html) => {
-    //     if (error) {
-    //         res.status(500).send('Internal Server Error');
-    //     } else {
-    //         res.setHeader('Content-Type', 'text/html');
-    //         res.status(200).send(html);
-    //     }
-    // });
 })
 
 const crypto = require('crypto');
@@ -50,17 +42,37 @@ app.get('/oauthcallback', function (req, res) {
             instanceUrl: conn.instanceUrl,
             accessToken: conn.accessToken
         });
-        conn2.identity(function (err, sfUserInfo) {
-            if (err) { return console.error(err); }
-            const data = {
-                displayButton: false,
-                displayContext: true,
-                userName: sfUserInfo.username,
-                displayname: sfUserInfo.display_name
-            };
+        const restApiEndpoint = `${conn.instantceURL}/services/data/v53.0/query/?q=SELECT+Id,Name+FROM+Account`;
+        conn2.request(restApiEndpoint, function (err, result) {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+    
+            // Process and send the account details to the client
+            const data = result.records.map(account => {
+                return {
+                    id: account.Id,
+                    name: account.Name
+                };
+            });
+            
+            res.json({ accounts: accounts });
             const response = res;
             response.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
         });
+        // conn2.identity(function (err, sfUserInfo) {
+        //     if (err) { return console.error(err); }
+        //     const data = {
+        //         displayButton: false,
+        //         displayContext: true,
+        //         userName: sfUserInfo.username,
+        //         displayname: sfUserInfo.display_name
+        //     };
+        //     const response = res;
+        //     response.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
+        // });
     });
 });
 
