@@ -53,7 +53,7 @@ app.post('/oauthconn',  (req, res) => {
         redirectUri: process.env.REDIRECT_URI,
     });
     const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
-    const fetchAccessToken = new jsforce.Connection({ oauth2: authorizationUrl });
+    const fetchAccessToken = new jsforce.Connection({ oauth2: oauth2 });
     fetchAccessToken.authorize(req.query.code, function(err, userInfo){
         if (err) {
             return console.error(err);
