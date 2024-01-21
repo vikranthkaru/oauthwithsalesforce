@@ -6,6 +6,7 @@ var ejs = require('ejs');
 var app = express();
 app.set('port', process.env.PORT || 3001);
 app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     fs.readFile('./app.html', (error, html) => {
         if (error) {
@@ -28,14 +29,6 @@ const codeChallenge = base64UrlEscape(crypto.createHash('sha256').update(codeVer
 var instantceURL;
 var accessToken;
 app.get('/oauthcallback', function (req, res) {
-    fs.readFile('./webflow.html', (error, html) => {
-        if (error) {
-            res.status(500).send('Internal Server Error');
-        } else {
-            res.setHeader('Content-Type', 'text/html');
-            res.status(200).send(html);
-        }
-    });
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
@@ -52,16 +45,26 @@ app.get('/oauthcallback', function (req, res) {
             instanceUrl : conn.instanceUrl,
             accessToken : conn.accessToken
         });
-        conn2.identity(function(err, res) {
+        conn2.identity(function(err, sfUserInfo) {
             if (err) { return console.error(err); }
-            const data = { userName: res.username,
-            displayname: res.display_name};
-            res.render('app.ejs', { data }); 
+            const data = {
+                userName: sfUserInfo.username,
+                displayname: sfUserInfo.display_name
+            };
+            const response = res;
             console.log("user ID: " + res.user_id);
             console.log("organization ID: " + res.organization_id);
             console.log("username: " + res.username);
             console.log("display name: " + res.display_name);
-            //res.send('heySalesforce : JSForce Connect Successed!');
+            fs.readFile('./webflow.html', (error, html) => {
+                if (error) {
+                    res.status(500).send('Internal Server Error');
+                } else {
+                   // res.setHeader('Content-Type', 'text/html');
+                    response.render('app.ejs', { data });
+                   // res.status(200).send(html);
+                }
+            });
         });
     });
 });
