@@ -62,10 +62,9 @@ app.post('/oauthconn',  (req, res) => {
     const oauth2 = new jsforce.OAuth2({
         clientId: process.env.CONSUMER_KEY,
         clientSecret: process.env.CONSUMER_SECRET,
-        redirectUri: process.env.REDIRECT_URI,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
-        code_verifier: codeVerifier,
+        redirectUri: process.env.REDIRECT_URI,
     });
     console.log('Authorization URL: ' + oauth2.getAuthorizationUrl({}));
     res.redirect(oauth2.getAuthorizationUrl({}));
