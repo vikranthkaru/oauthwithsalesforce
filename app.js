@@ -118,10 +118,7 @@ app.get('/flow', (req, res) => {
     } else {
         view = 'pages/webserverflow';
     }
-   // res.render(view, { activeTab: flowName });
-   res.render('pages/userAgentFlow', { activeTab: flowName });
-
-
+    res.render(view, { activeTab: flowName });
 });
 
 http.createServer(app).listen(app.get('port'), () => {
