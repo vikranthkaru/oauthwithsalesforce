@@ -112,7 +112,7 @@ app.post('/oauthconn', (req, res) => {
 
 app.get('/flow', (req, res) => {
     const flowName = req.query.flow;
-    alert('flowName-->'+flowName);
+    console.log('flowName-->'+flowName);
     if (flowName === 'UserAgentFlow') {
         view = 'pages/userAgentFlow';
     } else {
