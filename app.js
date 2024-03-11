@@ -113,13 +113,22 @@ app.post('/oauthconn', (req, res) => {
 app.get('/flow', (req, res) => {
     const flowName = req.query.flow;
     console.log('flowName-->'+flowName);
+    const data = {
+        accounts:[],
+        displayButton: false,
+        displayContext: true
+    }
     view = (flowName == 'userAgentFlow' ? 'pages/userAgentFlow' : (flowName == 'jwtBearerFlow' ? 'pages/userAgentFlow' : 'pages/webserverflow'))
-    // if (flowName === 'userAgentFlow') {
-    //     view = 'pages/userAgentFlow';
-    // } else if(){
-    //     view = 'pages/webserverflow';
-    // }
-    res.render(view, { activeTab: flowName });
+    if (flowName === 'userAgentFlow') {
+        view = 'pages/userAgentFlow';
+    } else if(flowName == 'jwtBearerFlow'){
+        view = 'pages/jwtBearerFlow';
+    }
+    else
+    {
+        view = 'pages/webserverflow';
+    }
+    res.render(view, {data, activeTab: flowName });
 });
 
 http.createServer(app).listen(app.get('port'), () => {
