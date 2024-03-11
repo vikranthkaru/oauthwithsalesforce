@@ -116,10 +116,10 @@ app.get('/flow', (req, res) => {
     if (flowName === 'UserAgentFlow') {
         view = 'pages/userAgentFlow';
     } else {
-        view = 'pages/defaultFlow';
+        view = 'pages/webserverflow';
     }
    // res.render(view, { activeTab: flowName });
-    //res.render('pages/userAgentFlow', { activeTab: flowName });
+   res.render('pages/userAgentFlow', { activeTab: flowName });
 
 
 });
