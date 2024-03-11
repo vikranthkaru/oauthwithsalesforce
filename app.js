@@ -98,7 +98,7 @@ app.get('/flow', (req, res) => {
     }
     else
     {
-        makeCallout(req.query.code);
+        makeCallout(res);
         view = 'pages/webserverflow';
 
     }
@@ -111,7 +111,7 @@ http.createServer(app).listen(app.get('port'), () => {
 
 
 
-function makeCallout(queryCode) {
+function makeCallout(res) {
     const oauth2 = new jsforce.OAuth2({
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
