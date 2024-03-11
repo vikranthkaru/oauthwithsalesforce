@@ -4,6 +4,9 @@
             <a class="nav-link <%= activeTab === 'OAuth Web Flow' ? 'active' : '' %>" href="" data-flow="OAuth Web Flow" action="/flow" method="post">OAuth Web Flow</a>
         </li>
         <li class="nav-item">
+            <form  action="/flow" data-flow="User Agent Flow" method="post" class="nav-link <%= activeTab === 'User Agent Flow' ? 'active' : '' %>" >
+                <button type="submit" id="submit">User Agent Flow</button>
+            </form> 
             <a class="nav-link <%= activeTab === 'User Agent Flow' ? 'active' : '' %>" href=""  action="/flow" data-flow="User Agent Flow">User Agent Flow</a>
         </li>
         <li class="nav-item">
