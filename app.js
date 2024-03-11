@@ -98,7 +98,7 @@ app.get('/flow', (req, res) => {
     }
     else
     {
-        makeCallout();
+        makeCallout(req.query.code);
         view = 'pages/webserverflow';
 
     }
@@ -111,12 +111,12 @@ http.createServer(app).listen(app.get('port'), () => {
 
 
 
-function makeCallout() {
+function makeCallout(queryCode) {
     const oauth2 = new jsforce.OAuth2({
         redirectUri: process.env.REDIRECT_URI
     });
     const conn = new jsforce.Connection({ oauth2: oauth2 });
-    conn.authorize(req.query.code, { code_verifier: codeVerifier }, function (err, userInfo) {
+    conn.authorize(queryCode, { code_verifier: codeVerifier }, function (err, userInfo) {
         if (err) {
             return console.error(err);
         }
