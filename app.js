@@ -113,41 +113,10 @@ http.createServer(app).listen(app.get('port'), () => {
 
 function makeCallout(queryCode) {
     const oauth2 = new jsforce.OAuth2({
-        redirectUri: process.env.REDIRECT_URI
+        code_challenge_method: 'S256',
+        code_challenge: codeChallenge,
+        redirectUri: process.env.REDIRECT_URI,
     });
-    const conn = new jsforce.Connection({ oauth2: oauth2 });
-    conn.authorize(queryCode, { code_verifier: codeVerifier }, function (err, userInfo) {
-        if (err) {
-            return console.error(err);
-        }
-        instantceURL = conn.instanceUrl;
-        accessToken = conn.accessToken;
-        const conn2 = new jsforce.Connection({
-            instanceUrl: conn.instanceUrl,
-            accessToken: conn.accessToken
-        });
-        const restApiEndpoint = `${conn.instanceUrl}/services/data/v53.0/query/?q=SELECT+Id,Name+FROM+Account`;
-        conn2.request(restApiEndpoint, function (err, result) {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Internal Server Error' });
-                return;
-            }
-    
-            // Process and send the account details to the client
-            const account = result.records.map(account => {
-                return {
-                    id: account.Id,
-                    name: account.Name
-                };
-            });
-            const data = {
-                accounts:account,
-                displayButton: false,
-                displayContext: true
-            }
-            const response = res;
-            response.render('pages/webserverflow', { data ,  activeTab: 'OAuth Web Flow'});
-        });
-    });
- }
+    const authorizationUrl = oauth2.getAuthorizationUrl({}) + `&code_challenge=${encodeURIComponent(codeChallenge)}`;
+    res.redirect(authorizationUrl);
+}
