@@ -112,8 +112,15 @@ app.post('/oauthconn', (req, res) => {
 
 app.get('/flow', (req, res) => {
     const flowName = req.query.flow;
-    console.log('flowName-->'+flowName);
-    res.render('pages/userAgentFlow', { activeTab: flowName });
+    alert('flowName-->'+flowName);
+    if (flowName === 'UserAgentFlow') {
+        view = 'pages/userAgentFlow';
+    } else {
+        view = 'pages/defaultFlow';
+    }
+   // res.render(view, { activeTab: flowName });
+    //res.render('pages/userAgentFlow', { activeTab: flowName });
+
 
 });
 
