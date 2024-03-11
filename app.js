@@ -113,11 +113,12 @@ app.post('/oauthconn', (req, res) => {
 app.get('/flow', (req, res) => {
     const flowName = req.query.flow;
     console.log('flowName-->'+flowName);
-    if (flowName === 'UserAgentFlow') {
-        view = 'pages/userAgentFlow';
-    } else {
-        view = 'pages/webserverflow';
-    }
+    view = (flowName == 'userAgentFlow' ? 'pages/userAgentFlow' : (flowName == 'jwtBearerFlow' ? 'pages/userAgentFlow' : 'pages/webserverflow'))
+    // if (flowName === 'userAgentFlow') {
+    //     view = 'pages/userAgentFlow';
+    // } else if(){
+    //     view = 'pages/webserverflow';
+    // }
     res.render(view, { activeTab: flowName });
 });
 
